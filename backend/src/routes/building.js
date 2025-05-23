@@ -25,6 +25,35 @@ router.post('/', async (req, res) => {
   }
 });
 
+// update building geometry by id
+/**
+ * Sample request body:
+{
+  "id": 5,
+  "geom": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [4.871218, 45.780758],
+        [4.871453, 45.780803],
+        [4.871935, 45.779769],
+        [4.871692, 45.779722],
+        [4.871218, 45.780758]
+      ]
+    ]
+  }
+}
+ */
+router.post('/geom', async (req, res) => {
+  const { body } = req;
+  if (body.geom === undefined || body.id === undefined) {
+    res.sendStatus(400);
+  } else {
+    await query('UPDATE buildings SET geom = St_AsText(ST_GeomFromGeoJson($1)) WHERE id = $2', [body.geom, body.id]);
+    res.sendStatus(200);
+  }
+});
+
 // get rooms in building by id
 router.get('/:id/rooms', async (req, res) => {
   const { id } = req.params;

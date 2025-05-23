@@ -25,7 +25,7 @@ async function init() {
 
 init();
 
-const PORT = process.env.PORT || 3004;
+const PORT = process.env.PG_PORT || 3004;
 
 app.listen(PORT, () => {
   console.log(chalk.green(`Online Spring School running on ${PORT}!`));

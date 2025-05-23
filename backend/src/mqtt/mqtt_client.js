@@ -18,6 +18,13 @@ mqttClient.on('connect', () => {
     });
 });
 
+/**
+ * Sample MQTT message format:
+        {
+        "sensor_id": 5,
+        "value": 22
+        }
+ */
 mqttClient.on('message', async (topic, message) => {
     try {
         const jsonMessage = JSON.parse(message.toString());
